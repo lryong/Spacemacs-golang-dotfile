@@ -1,6 +1,6 @@
 #### Spacemacs configuration great for golang developers
 
-Make your `.spacemacs` backup and just clone it and cp `.init.el.bak` to `$HOME/.spacemacs`.
+Make your `.spacemacs` backup and just clone it and copy `init.el.bak` to `$HOME/.spacemacs`.
 
 
 ##### Reference
