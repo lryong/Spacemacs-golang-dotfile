@@ -31,37 +31,33 @@ values."
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
    '(
-     markdown
-     (markdown :variables markdown-live-preview-engine 'vmd)
-     go
+     ruby
+     javascript
      python
+     rust
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
      ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
      ;; <M-m f e R> (Emacs style) to install them.
      ;; ----------------------------------------------------------------
      helm
-     sql
-     ranger
-     javascript
-     html
-     yaml
-     rust
+     (go :variables
+         ;; go-use-gometalinter t
+         gofmt-command "goimports"
+         go-tab-width 4)
      auto-completion
      better-defaults
      emacs-lisp
      git
+     ;; markdown
      org
-     deft
+     ranger
      (shell :variables
-            shell-default-height 30
-            shell-default-position 'bottom)
+             shell-default-height 30
+             shell-default-position 'bottom)
      spell-checking
      syntax-checking
      version-control
-     (chinese :packages youdao-dictionary fcitx
-              :variables chinese-enable-fcitx nil
-              chinese-enable-youdao-dict t)
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
@@ -139,9 +135,11 @@ values."
    ;; List of themes, the first of the list is loaded when spacemacs starts.
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
-   ;; dotspacemacs-themes '(spacemacs-dark
-   ;;                       spacemacs-light)
-   dotspacemacs-themes '(sanityinc-solarized-dark)
+
+   dotspacemacs-themes '(spacemacs-dark
+                         spacemacs-light)
+
+   ;; dotspacemacs-themes '(sanityinc-solarized-dark)
    ;; If non nil the cursor color matches the state color in GUI Emacs.
    dotspacemacs-colorize-cursor-according-to-state t
    ;; Default font, or prioritized list of fonts. `powerline-scale' allows to
@@ -151,7 +149,6 @@ values."
                                :weight normal
                                :width normal
                                :powerline-scale 1.1)
-   ;; dotspacemacs-default-font '(-*-Menlo-normal-normal-normal-*-18-*-*-*-m-0-iso10646-1)
    ;; The leader key
    dotspacemacs-leader-key "SPC"
    ;; The key used for Emacs commands (M-x) (after pressing on the leader key).
@@ -312,7 +309,7 @@ values."
   "Initialization function for user code.
 It is called immediately after `dotspacemacs/init', before layer configuration
 executes.
-This function is mostly useful for variables that need to be set
+ This function is mostly useful for variables that need to be set
 before packages are loaded. If you are unsure, you should try in setting them in
 `dotspacemacs/user-config' first."
   (setq-default
@@ -320,6 +317,7 @@ before packages are loaded. If you are unsure, you should try in setting them in
    '(("melpa-cn" . "https://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")
      ("gnu-cn" . "https://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
      ("org-cn" . "https://mirrors.tuna.tsinghua.edu.cn/elpa/org/")))
+  (setq create-lockfiles nil)
   )
 
 (defun dotspacemacs/user-config ()
@@ -343,7 +341,8 @@ you should place your code here."
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (youdao-dictionary names chinese-word-at-point yaml-mode xterm-color web-mode web-beautify vmd-mode unfill toml-mode tagedit sql-indent slim-mode shell-pop scss-mode sass-mode ranger racer pug-mode mwim multi-term livid-mode skewer-mode simple-httpd less-css-mode json-mode json-snatcher json-reformat js2-refactor multiple-cursors js2-mode js-doc helm-css-scss helm-company helm-c-yasnippet haml-mode git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-gutter fuzzy flyspell-correct-helm flyspell-correct flycheck-rust flycheck-pos-tip pos-tip flycheck eshell-z eshell-prompt-extras esh-help emmet-mode diff-hl deft company-web web-completion-data company-tern tern company-statistics company-go company-anaconda company coffee-mode cargo rust-mode auto-yasnippet yasnippet auto-dictionary ac-ispell mmm-mode markdown-toc markdown-mode gh-md go-autocomplete auto-complete go-guru go-eldoc go-mode yapfify pyvenv pytest pyenv-mode py-isort pip-requirements live-py-mode hy-mode dash-functional helm-pydoc cython-mode anaconda-mode pythonic ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint indent-guide hydra hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation helm-themes helm-swoop helm-projectile helm-mode-manager helm-make projectile pkg-info epl helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu elisp-slime-nav dumb-jump diminish define-word column-enforce-mode clean-aindent-mode bind-key auto-highlight-symbol auto-compile aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line))))
+    (rvm ruby-tools ruby-test-mode rubocop rspec-mode robe rbenv rake minitest chruby bundler inf-ruby helm-company helm-c-yasnippet fuzzy company-tern tern company-statistics company-go company-anaconda company auto-yasnippet ac-ispell xterm-color unfill shell-pop mwim multi-term flyspell-correct-helm flyspell-correct flycheck-rust flycheck-pos-tip flycheck-gometalinter flycheck eshell-z eshell-prompt-extras esh-help auto-dictionary web-beautify livid-mode skewer-mode simple-httpd json-mode json-snatcher json-reformat js2-refactor yasnippet multiple-cursors js2-mode js-doc coffee-mode async yapfify pyvenv pytest pyenv-mode py-isort pip-requirements live-py-mode hy-mode dash-functional helm-pydoc cython-mode anaconda-mode pythonic helm helm-core toml-mode racer pos-tip cargo markdown-mode rust-mode go-guru go-eldoc go-mode smeargle ranger orgit org-projectile org-category-capture org-present org-pomodoro alert log4e gntp org-mime org-download magit-gitflow htmlize helm-gitignore go-autocomplete auto-complete gnuplot gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-gutter evil-magit magit magit-popup git-commit ghub treepy graphql with-editor diff-hl org-plus-contrib ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint indent-guide hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-themes helm-swoop helm-projectile helm-mode-manager helm-make helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu elisp-slime-nav dumb-jump diminish define-word column-enforce-mode clean-aindent-mode auto-highlight-symbol auto-compile aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line))))
+
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
